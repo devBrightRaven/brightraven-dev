@@ -1,0 +1,9 @@
+{
+  "name": "brightraven-dev",
+  "version": "1.0.0",
+  "description": "Personal development workflow tools — not for distribution",
+  "author": {
+    "name": "bertram"
+  },
+  "skills": ["./commands/"]
+}
