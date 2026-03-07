@@ -1,13 +1,22 @@
 ---
-description: Use when developing hirameki (C:/Code/hirameki) — change propagation checklist, test reminders, vault sync, session wrap
+description: Use when developing hirameki — change propagation checklist, test reminders, vault sync, session wrap
 ---
 
 # Hirameki Development Workflow
 
+## Step 0 — Resolve paths
+
+Read `## Vault Structure` from `~/.claude/CLAUDE.md`. Extract: `vault`.
+If missing, stop and respond: "Setup not complete. Please run `/hirameki:__init` first."
+
+Detect the hirameki repo root: search for the nearest ancestor of the current working directory that contains `.claude-plugin/plugin.json` with `"name": "hirameki"`, or fall back to the directory where `commands/*.md` and `tests/validate_commands.py` exist.
+Let `{repo}` = the detected repo root.
+Let `{vault}` = the vault path from CLAUDE.md.
+
 ## When to use this skill
 
 Invoke when:
-- Working in `C:/Code/hirameki`
+- Working in a hirameki repo clone
 - Modifying any `commands/*.md` file
 - About to end a hirameki dev session
 - Asking "what do I need to update after changing X?"
@@ -23,11 +32,11 @@ When `commands/*.md` is modified, the following may also need updating — check
 | Any `commands/*.md` | Run `python tests/validate_commands.py` | — |
 | Command logic, structure, or sections | All 3 ref docs: `_hirameki_cmds/hirameki-cmds-full.md`, `hirameki-cmds-full-zh-TW.md`, `hirameki-cmds-full-ja.md` | Short versions if user-facing summary changed |
 | Command added or removed | README (all 3 language sections) + all 6 ref docs | — |
-| After pushing to GitHub | Sync vault: copy `C:/Code/hirameki/_hirameki_cmds/*.md` → `D:/Obsidian/br-os-vault/_hirameki_cmds/` | — |
+| After pushing to GitHub | Sync vault: copy `{repo}/_hirameki_cmds/*.md` → `{vault}/_hirameki_cmds/` | — |
 
 Run the check after every modification, before committing:
 ```bash
-cd C:/Code/hirameki && PYTHONUTF8=1 python tests/validate_commands.py
+cd {repo} && PYTHONUTF8=1 python tests/validate_commands.py
 ```
 
 ---
@@ -39,7 +48,7 @@ Before closing a hirameki dev session, verify:
 - [ ] `python tests/validate_commands.py` → all passed
 - [ ] Reference docs updated if command logic changed
 - [ ] Vault `_hirameki_cmds/` in sync with repo
-- [ ] Committed and pushed to `devBrightRaven/hirameki`
+- [ ] Committed and pushed
 
 Then suggest: `/hirameki:wrap` to record the session.
 
@@ -49,12 +58,12 @@ Then suggest: `/hirameki:wrap` to record the session.
 
 | Location | Path |
 |----------|------|
-| Repo | `C:/Code/hirameki/` |
-| Commands | `C:/Code/hirameki/commands/` |
-| Reference docs (repo) | `C:/Code/hirameki/_hirameki_cmds/` |
-| Reference docs (vault) | `D:/Obsidian/br-os-vault/_hirameki_cmds/` |
-| Validation script | `C:/Code/hirameki/tests/validate_commands.py` |
-| CI workflow | `C:/Code/hirameki/.github/workflows/validate.yml` |
+| Repo | `{repo}/` |
+| Commands | `{repo}/commands/` |
+| Reference docs (repo) | `{repo}/_hirameki_cmds/` |
+| Reference docs (vault) | `{vault}/_hirameki_cmds/` |
+| Validation script | `{repo}/tests/validate_commands.py` |
+| CI workflow | `{repo}/.github/workflows/validate.yml` |
 
 ---
 
