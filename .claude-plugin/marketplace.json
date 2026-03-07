@@ -1,0 +1,13 @@
+{
+  "name": "brightraven-dev",
+  "owner": {
+    "name": "devBrightRaven"
+  },
+  "plugins": [
+    {
+      "name": "brightraven-dev",
+      "source": "./",
+      "description": "Personal development workflow tools — session orientation, vault automation, repo hygiene, and code quality checks"
+    }
+  ]
+}
